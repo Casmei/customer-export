@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
-import { CustomersModule } from './customer/customers.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { CustomThrottlerGuard } from './common/guards/custom-throttler.guard';
+import { VehiclesModule } from './vehicle/vehicles.module';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { CustomThrottlerGuard } from './common/guards/custom-throttler.guard';
         },
       ],
     }),
-    CustomersModule,
+    VehiclesModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: CustomThrottlerGuard }],
 })
