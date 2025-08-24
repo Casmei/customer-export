@@ -7,7 +7,7 @@ import {
 
 @Entity()
 export class Customer {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({ length: 120 })

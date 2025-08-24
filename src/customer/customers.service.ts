@@ -60,7 +60,7 @@ export class CustomersService {
       const customer = this.repo.create({
         name,
         email,
-        phone: faker.phone.number(),
+        phone: faker.phone.number({ style: 'international' }),
       });
 
       saved = await this.repo.save(customer);
@@ -74,7 +74,7 @@ export class CustomersService {
   }
 
   async findAll(): Promise<Customer[]> {
-    return this.repo.find({ order: { id: 'ASC' } });
+    return this.repo.find({ order: { createdAt: 'ASC' } });
   }
 
   @Cron(CronExpression.EVERY_30_MINUTES)
@@ -82,7 +82,7 @@ export class CustomersService {
     await this.createUniqueRandomCustomer();
   }
 
-  @Cron('0 0 */7 * *')
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async clearDatabase(): Promise<void> {
     await this.repo.clear();
     this.logger.warn('🚨 Banco de dados limpo automaticamente');
